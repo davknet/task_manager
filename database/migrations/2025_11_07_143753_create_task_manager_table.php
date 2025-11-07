@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('task_manager', function (Blueprint $table) {
             $table->id();
             $table->timestamp('s_time')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('task_id');
             $table->unsignedBigInteger('priority_id');
             $table->unsignedBigInteger('status_id');
@@ -25,6 +26,11 @@ return new class extends Migration
              $table->foreign('task_id')
                   ->references('id')
                   ->on('tasks')
+                  ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
                   ->onDelete('cascade');
 
             $table->foreign('priority_id')
