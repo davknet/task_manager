@@ -19,7 +19,13 @@ class TasksModel extends Model
 
      public function priority(){
 
-         $this->belongsTo(TaskPriority::class  , 'task_priority') ;
+        return  $this->belongsTo(TaskPriority::class  , 'task_priority') ;
+
+     }
+
+      public function answers(){
+
+       return   $this->hasMany(TaskAnswers::class , 'task_id') ;
 
      }
 

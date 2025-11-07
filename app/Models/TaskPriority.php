@@ -23,11 +23,7 @@ class TaskPriority extends Model
 
 
 
-     public function answers(){
-
-        $this->hasMany(TaskAnswers::class , 'task_id') ;
-
-     }
+    
 
 
 }
