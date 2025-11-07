@@ -24,11 +24,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
 
-               TaskStatusSeeder::class ,
-               TaskPrioritySeeder::class ,
-               TaskSeeder::class,
-               
-
+            //    TaskStatusSeeder::class ,
+            //    TaskPrioritySeeder::class ,
+            //    TaskSeeder::class,
+                  TaskAnswersSeeder::class ,
 
         ]);
 
