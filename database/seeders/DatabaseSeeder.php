@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
             //    TaskStatusSeeder::class ,
             //    TaskPrioritySeeder::class ,
             //    TaskSeeder::class,
-            //   TaskAnswersSeeder::class ,
-                 IsAnswerCorrectSeeder::class ,
+                //  TaskAnswersSeeder::class ,
+                //  IsAnswerCorrectSeeder::class ,
 
         ]);
 
