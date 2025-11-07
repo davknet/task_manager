@@ -13,15 +13,11 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('task_status');
             $table->unsignedBigInteger('task_priority');
             $table->string('title', 255);
             $table->string('description', 900)->default('');
             $table->timestamps();
-            $table->foreign('task_status')
-                  ->references('id')
-                  ->on('task_status')
-                  ->onDelete('cascade');
+
 
             $table->foreign('task_priority')
                   ->references('id')
