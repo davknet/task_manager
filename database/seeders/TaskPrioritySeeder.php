@@ -11,9 +11,9 @@ class TaskPrioritySeeder extends Seeder
 
     protected array $priority = [
 
-         [ "title" => "low"    , "description" => "The low priority of the task by our logic, must be done last " ],
+         [ "title" => "low"    , "description" => "The low priority of the task by our logic, must be done first " ],
          [ "title" => "medium" , "description" => "The medium priority of the task, by our logic, must be done before the last  task " ],
-         [ "title" => "high"   , "description" => "The high priority of the task, by our logic, must be done first" ],
+         [ "title" => "high"   , "description" => "The high priority of the task, by our logic, must be done last" ],
 
 
 
