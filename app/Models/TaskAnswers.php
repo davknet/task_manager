@@ -21,4 +21,20 @@ class TaskAnswers extends Model
     }
 
 
+
+    public function status(){
+
+        // return $this->hasMany() ;
+    }
+
+
+    public function taskManager(){
+
+        return $this->belongsTo(TasksManagerModel::class , 'answer_id') ;
+    }
+
+
+    
+
+
 }

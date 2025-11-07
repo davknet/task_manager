@@ -23,7 +23,14 @@ class TaskPriority extends Model
 
 
 
-    
+     public function taskManager(){
+
+        return $this->belongsTo(TasksManagerModel::class , 'priority_id') ;
+     }
+
+
+
+
 
 
 }

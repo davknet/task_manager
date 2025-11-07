@@ -30,5 +30,12 @@ class TasksModel extends Model
      }
 
 
+     public function tasksManager(){
+
+
+        return $this->belongsTo(TasksManagerModel::class , 'task_id') ;
+     }
+
+
 
 }
