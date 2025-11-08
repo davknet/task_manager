@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('task' ,  255 );
             $table->string('status');
             $table->string('priority');
+            $table->string('answer') ;
             $table->boolean('is_answer_correct');
             $table->timestamps();
 
