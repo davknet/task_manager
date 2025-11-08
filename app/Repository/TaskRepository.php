@@ -108,10 +108,12 @@ class TaskRepository
 
     public function updateStatus(array $data  ){
 
+        $task_manager_id   =  (int) $data['id'] ;
+        $status_id         =  $data['status_id'] ;
 
-      $result =  TasksManagerModel::where('id' , $data['id'] )
+      $result =  TasksManagerModel::where('id' ,   $task_manager_id   )
                             ->where('status_id' , '!=' , '3' )
-                            ->update(['status_id' => $data['status_id'] , 'updated_at' => now() ] );
+                            ->update(['status_id' => $status_id  , 'updated_at' => now() ] );
 
       if(!$result)
       {
@@ -123,8 +125,11 @@ class TaskRepository
       }
 
 
-      $user_id = $data['user_id'];
-      $row     = $this->getTaskForRecord($data['id'] , $user_id ) ;
+      $user_id = (int)$data['user_id'];
+
+
+      $row     = $this->getTaskForRecordByTaskManagerId( $task_manager_id , $user_id   ) ;
+
 
       if($row){
 
@@ -156,9 +161,6 @@ class TaskRepository
       }
 
 
-
-
-
        return [
             'success' => 'ok' ,
             'message' =>  'task status has been updated !!! ' ,
@@ -174,6 +176,7 @@ class TaskRepository
 
     public function getTaskForRecord( int $task_id , int $user_id ){
 
+        Log::info("message task_id $task_id user id $user_id ");
 
         $row = DB::table('task_manager')
                    ->leftJoin( 'is_answer_correct', 'task_manager.task_id', '=', 'is_answer_correct.task_id' )
@@ -183,6 +186,39 @@ class TaskRepository
                    ->leftJoin('task_priority' , 'task_manager.priority_id' , '=' , 'task_priority.id')
                    ->leftJoin('task_answers' , 'task_manager.answer_id' , '=' , 'task_answers.id' )
                    ->where('task_manager.task_id' , $task_id )
+                   ->where('task_manager.user_id' , $user_id )
+                   ->where('task_manager.status_id',  3 )
+                   ->select(
+                    'task_manager.*' ,
+                    'is_answer_correct.task_answers_id AS correct_answer_id' ,
+                    'users.name as full_name' ,
+                    'tasks.title as question' ,
+                    'task_manager.id AS task_manager_id',
+                    'task_status.title as status' ,
+                    'task_priority.title as priority' ,
+                    'task_answers.answer_text as answer'
+
+                   )
+            ->latest('task_manager.id')
+            ->first();
+
+            return $row ;
+
+    }
+
+
+      public function getTaskForRecordByTaskManagerId( int $task__manager_id , int $user_id ){
+
+
+
+        $row = DB::table('task_manager')
+                   ->leftJoin( 'is_answer_correct', 'task_manager.task_id', '=', 'is_answer_correct.task_id' )
+                   ->leftJoin('users' , 'task_manager.user_id' , '=' , 'users.id')
+                   ->leftJoin('tasks' , 'task_manager.task_id' , '=' , 'tasks.id' )
+                   ->leftJoin('task_status' , 'task_manager.status_id' , '=' , 'task_status.id')
+                   ->leftJoin('task_priority' , 'task_manager.priority_id' , '=' , 'task_priority.id')
+                   ->leftJoin('task_answers' , 'task_manager.answer_id' , '=' , 'task_answers.id' )
+                   ->where('task_manager.id' , $task__manager_id )
                    ->where('task_manager.user_id' , $user_id )
                    ->where('task_manager.status_id',  3 )
                    ->select(
