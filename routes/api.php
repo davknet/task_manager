@@ -24,6 +24,7 @@ Route::prefix('/make/manager')->name('make.manager.')->group(function () {
 
     Route::post('/create', [TasksManagerController::class, 'create'])->name('create');
     Route::patch('/update/{id}/status', [TasksManagerController::class, 'update'])->name('update');
+    Route::get('/tasks/{id}' , [TasksManagerController::class, 'getAvailableTasks'])->name('getList');
 
 });
 

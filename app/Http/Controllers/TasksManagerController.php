@@ -72,12 +72,9 @@ class TasksManagerController extends Controller
 
          $data = $request->validated();
 
-
          $request = $request->all() ;
 
          $status = $request['status'] ;
-
-
 
           $data = [
 
@@ -107,10 +104,69 @@ class TasksManagerController extends Controller
 
              'success' => 'ok' ,
              'message' => 'status has been updated !!!',
-             'data'    => $result 
+             'data'    => $result
 
 
          ], 200 );
+    }
+
+
+
+
+    public function getAvailableTasks($id){
+
+
+        if(!$id)
+        {
+            return response()->json([
+
+                  'success' => false ,
+                  'message' => 'please , provide valid user_id ' ,
+
+            ]);
+        }
+
+        try{
+
+           $list =   $this->service->getNotCompletedTasks($id);
+
+           if(!$list)
+           {
+
+               return response()->json([
+
+                  'success' => 'ok' ,
+                  'message' => 'we don\'t have any available tasks' ,
+                  'list'    => $list
+
+               ] , 404 );
+           }
+
+           return response()->json([
+
+               'success' => 'ok' ,
+               'message' => 'successfully got list of tasks' ,
+               'list'    => $list
+
+           ] , 200 );
+
+        }catch(\Exception $e )
+        {
+
+            Log::error(' An exception occurred while getting the available list of tasks  ' . $e->getMessage() ) ;
+
+            return response()->json([
+
+                    'success'  => false ,
+                    'message'  => 'Exception occurred while getting list of tasks ' ,
+                    'error'    => $e->getMessage()
+            ]);
+
+        }
+
+
+
+
 
 
     }

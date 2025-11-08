@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\TasksManagerModel;
+use App\Models\TasksModel;
 use App\Models\TaskStatusModel;
 use App\Repository\TaskRepository;
 use Illuminate\Http\Request;
@@ -186,6 +187,27 @@ class TaskManagerService
                  'user_id'   => $user_id
 
                 ]);
+
+    }
+
+
+
+
+
+
+    public function getNotCompletedTasks(int $user_id)
+    {
+
+        $tasks = TasksModel::whereNotIn( 'id', function ($q) use ($user_id) {
+                    $q->select('task_id')
+                    ->from('task_manager')
+                    ->where('user_id', $user_id)
+                    ->where('status_id', 3);
+                })
+                ->with(['answers', 'priority'])
+                ->get();
+
+         return $tasks ;
 
     }
 }
