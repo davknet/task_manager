@@ -21,7 +21,8 @@ class TaskTestMakerModel extends Model
         'priority'          ,
         'is_answer_correct' ,
         'created_at'        ,
-        'updated_at'
+        'updated_at'        ,
+        'answer'            ,
 
      ] ;
 
@@ -72,7 +73,7 @@ class TaskTestMakerModel extends Model
 
 
 
-    
+
 
 
 
