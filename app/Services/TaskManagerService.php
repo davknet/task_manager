@@ -90,6 +90,7 @@ class TaskManagerService
                     'is_answer_correct.task_answers_id AS correct_answer_id' ,
                     'users.name as full_name' ,
                     'tasks.title as question' ,
+                    'task_manager.id AS task_manager_id',
                     'task_status.title as status' ,
                     'task_priority.title as priority' ,
                     'task_answers.answer_text as answer'

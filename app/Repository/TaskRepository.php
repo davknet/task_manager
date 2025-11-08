@@ -18,21 +18,21 @@ class TaskRepository
     public function makeTestRecords($data){
 
 
-        $task_id           = $data['task_id']   ;
-        $user_id           = $data['user_id']   ;
-        $answer_id         = $data['answer_id'] ;
-        $status_id         = $data['status_id ']  ;
-        $priority_id       = $data['priority_id'] ;
-        $task_manager_id   = $data['task_manager_id'];
-        $full_name         = $data['full_name'] ;
-        $task              = $data['question']  ;
-        $status            = $data['status']    ;
-        $priority          = $data['priority']  ;
-        $correct_answer_id = $data['correct_answer_id'];
+        $task_id           = $data->task_id ;
+        $user_id           = $data->user_id ;
+        $answer_id         = $data->answer_id ;
+        $status_id         = $data->status_id ;
+        $priority_id       = $data->priority_id ;
+        $task_manager_id   = $data->task_manager_id ;
+        $full_name         = $data->full_name ;
+        $task              = $data->question  ;
+        $status            = $data->status    ;
+        $priority          = $data->priority  ;
+        $correct_answer_id = $data->correct_answer_id ;
         $is_answer_correct = ( $answer_id ==  $correct_answer_id ) ? true : false ;
-        $created_at        = $data['created_at'] ;
-        $updated_at        = $data['updated_at'] ;
-        $answer            = $data['answer'] ;
+        $created_at        = $data->created_at  ;
+        $updated_at        = $data->updated_at  ;
+        $answer            = $data->answer      ;
 
 
 
