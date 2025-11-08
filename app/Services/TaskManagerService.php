@@ -78,14 +78,28 @@ class TaskManagerService
 
             $row = DB::table('task_manager')
                    ->leftJoin( 'is_answer_correct', 'task_manager.task_id', '=', 'is_answer_correct.task_id' )
+                   ->leftJoin('users' , 'task_manager.user_id' , '=' , 'users.id')
+                   ->leftJoin('tasks' , 'task_manager.task_id' , '=' , 'tasks.id' )
+                   ->leftJoin('task_status' , 'task_manager.status_id' , '=' , 'task_status.id')
+                   ->leftJoin('task_priority' , 'task_manager.priority_id' , '=' , 'task_priority.id')
+                   ->leftJoin('task_answers' , 'task_manager.answer_id' , '=' , 'task_answers.id' )
                    ->where('task_manager.task_id' , $task_id )
                    ->where('task_manager.user_id' , $user_id )
                    ->select(
                     'task_manager.*' ,
-                    'is_answer_correct.task_answers_id AS correct_answer_id'
+                    'is_answer_correct.task_answers_id AS correct_answer_id' ,
+                    'users.name as full_name' ,
+                    'tasks.title as question' ,
+                    'task_status.title as status' ,
+                    'task_priority.title as priority' ,
+                    'task_answers.answer_text as answer'
+
                    )
             ->latest('task_manager.id')
             ->first();
+
+
+            array
 
 
 
