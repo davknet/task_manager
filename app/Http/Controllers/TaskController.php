@@ -10,7 +10,7 @@ class TaskController extends Controller
     //
 
 
-    function index( Request $request ){
+    function index(){
 
        $tasks =  TasksModel::with([ 'priority', 'answers'])->get();
        return response()->json($tasks) ;

@@ -101,7 +101,14 @@ class TaskManagerService
 
 
 
-            $this->taskRepository->makeTestRecords($row);
+           $res = $this->taskRepository->makeTestRecords($row);
+
+
+
+
+
+
+
 
 
 
@@ -109,7 +116,7 @@ class TaskManagerService
 
                  'success' => 'ok' ,
                  'message' => 'the task created successfully ' ,
-                 'data'    => $row
+                 'data'    =>  $res
 
             ]);
 

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\TasksModel;
 use App\Models\TaskTestMakerModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -59,6 +60,41 @@ class TaskRepository
 
 
 
+                if(!$result ){
+
+                    return response()->json([
+
+                        'success' => false ,
+                        'message' => 'failed to create row in the task_manager_test ' ,
+                        'result'  => $result
+
+                    ]);
+                }
+
+
+
+                $next =  $this->getNextTask($task_id);
+
+                if(!$next){
+
+                    return response()->json( [
+                              'success' => false ,
+                              'message' => 'failed to get $next task' ,
+                    ], 426 );
+                }
+
+                return response()->json( $next , 200 ) ;
+    }
+
+
+    public function getNextTask( int $task_id  ){
+
+           $next_task_id = $task_id + 1 ?? 0 ;
+           $result       = TasksModel::with('priority' , 'answers' )
+                           ->where('tasks.id' , $next_task_id )
+                           ->first();
+
+      return $result ;
     }
 
 }

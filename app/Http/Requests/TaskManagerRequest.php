@@ -68,15 +68,6 @@ class TaskManagerRequest extends FormRequest
                 ->where('user_id' , $user_id)
                 ->exists();
 
-                Log::info("error" , [
-
-                    'priority_id' =>   $priority_id ,
-                    'task_id'     =>   $task_id     ,
-                     'answer_id'  =>   $answer_id   ,
-                    'status_id'   =>   $status_id   ,
-                    'user_id '    =>   $user_id     ,
-                    'valid'       =>   $valid
-                ]);
 
                 if(!$valid ){
 
