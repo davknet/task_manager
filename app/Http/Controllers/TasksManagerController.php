@@ -9,11 +9,17 @@ class TasksManagerController extends Controller
 {
 
 
-    public function insertTask(TaskManagerRequest $request){
+    public function create(TaskManagerRequest $request){
+
+         $data = $request->validated();
+
+
+         
+
+         return response()->json(['status' => 'ok']  , 200 );
 
 
 
-         dd($request);
 
     }
 }

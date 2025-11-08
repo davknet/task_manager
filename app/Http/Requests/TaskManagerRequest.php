@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\DB;
 
 class TaskManagerRequest extends FormRequest
@@ -69,13 +70,29 @@ class TaskManagerRequest extends FormRequest
 
                 if(!$valid ){
 
-                    $validator->errors()->add('priority_id' , 'you mast to the lower priority task at first');
+                    $validator->errors()->add('priority_id' , 'you must solve  the lower priority task at first');
                 }
 
            }
 
+    }
 
 
+
+    protected function failedValidation(Validator $validator){
+
+       throw new HttpResponseException(
+
+        response()->json([
+
+            'success' => false ,
+            'message' => 'validation failed !!! ' ,
+            'error'   => $validator->errors()
+
+
+        ], 422 )
+
+       );
 
     }
 
