@@ -99,7 +99,8 @@ class TaskManagerService
             ->first();
 
 
-            array
+
+            $this->taskRepository->makeTestRecords($row);
 
 
 
