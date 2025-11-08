@@ -62,13 +62,13 @@ class TaskRepository
 
                 if(!$result ){
 
-                    return response()->json([
+                    return [
 
                         'success' => false ,
                         'message' => 'failed to create row in the task_manager_test ' ,
                         'result'  => $result
 
-                    ]);
+                    ];
                 }
 
 
@@ -77,13 +77,20 @@ class TaskRepository
 
                 if(!$next){
 
-                    return response()->json( [
+                    return [
                               'success' => false ,
                               'message' => 'failed to get $next task' ,
-                    ], 426 );
+                              'data'    => $next
+                    ] ;
                 }
 
-                return response()->json( $next , 200 ) ;
+                return [
+
+                    'success' => 'ok' ,
+                    'message' => 'get next task  data ' ,
+                    'data'    =>  $next
+
+                    ] ;
     }
 
 

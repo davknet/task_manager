@@ -105,20 +105,29 @@ class TaskManagerService
 
 
 
+           if(!$res['success'])
+           {
+               return [
+
+                  'success' => false ,
+                  'message' => 'tasks created successfully  but failed next task',
+                  'data'    => $res
+
+               ];
+           }
 
 
 
 
 
 
-
-            return response()->json([
+            return [
 
                  'success' => 'ok' ,
-                 'message' => 'the task created successfully ' ,
+                 'message' => 'the task created successfully' ,
                  'data'    =>  $res
 
-            ]);
+            ] ;
 
     }
 }

@@ -33,14 +33,14 @@ class TasksManagerController extends Controller
 
         $response =  $this->service->createNewRow($request);
 
-          if(!$response){
+          if(!$response['success'] ){
 
             return response()->json([
                'success' => false ,
                'message' => 'failed to create new row' ,
                'response' => $response
 
-            ]);
+            ] , 426 );
           }
 
           return response()->json([
@@ -53,14 +53,15 @@ class TasksManagerController extends Controller
 
          }catch(\Exception $e )
          {
-             Log::error("Exception occurred while create new row in the task_manager" .$e->getMessage() . " at line " . $e->getLine() ) ;
+             Log::error("Exception occurred while create new row in the task_manager" . $e->getMessage() . " at line " . $e->getLine() ) ;
+            return response()->json([
+            'success'  => false  ,
+            'message'  => 'error occurred when creating task_manager row ' ,
+            'error'    => $e->getMessage()
+
+          ]) ;
 
          }
-
-
-
-        //  return response()->json(['status' => 'ok']  , 200 );
-
 
 
 
