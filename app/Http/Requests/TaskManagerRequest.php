@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TaskManagerRequest extends FormRequest
 {
@@ -52,7 +53,7 @@ class TaskManagerRequest extends FormRequest
 
            $priority_id = $this->input('priority_id') ;
            $task_id     = $this->input('task_id');
-           $answer_id   = $this->input('task_id');
+           $answer_id   = $this->input('_id');
            $status_id   = $this->input('status_id');
            $user_id     = $this->input('user_id') ;
 
@@ -65,8 +66,17 @@ class TaskManagerRequest extends FormRequest
                 $valid = DB::table('task_manager')
                 ->where( 'priority_id' , $low_priority )
                 ->where('user_id' , $user_id)
-                ->where('task_id' , $task_id )
                 ->exists();
+
+                Log::info("error" , [
+
+                    'priority_id' =>   $priority_id ,
+                    'task_id'     =>   $task_id     ,
+                     'answer_id'  =>   $answer_id   ,
+                    'status_id'   =>   $status_id   ,
+                    'user_id '    =>   $user_id     ,
+                    'valid'       =>   $valid
+                ]);
 
                 if(!$valid ){
 
