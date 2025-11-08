@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskManagerRequest;
+use App\Http\Requests\TaskManagerUpdateStatusRequest;
 use App\Services\TaskManagerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -19,8 +20,6 @@ class TasksManagerController extends Controller
     public function __construct(TaskManagerService $service ){
 
          $this->service = $service ;
-
-
     }
 
     public function create(TaskManagerRequest $request){
@@ -59,10 +58,59 @@ class TasksManagerController extends Controller
             'message'  => 'error occurred when creating task_manager row ' ,
             'error'    => $e->getMessage()
 
-          ]) ;
+          ]);
+
+         }
+    }
+
+
+
+
+
+    public function update( TaskManagerUpdateStatusRequest $request , $id ){
+
+
+         $data = $request->validated();
+
+
+         $request = $request->all() ;
+
+         $status = $request['status'] ;
+
+
+
+          $data = [
+
+              'id'      => $id ,
+              'status'  => $status
+
+          ];
+
+         $result =   $this->service->updateTaskManagerStatus($data) ;
+
+
+         if(!$result['success'])
+         {
+
+            return response()->json([
+
+                 'success'  => false ,
+                 'message'  => 'failed to update status !!! ' ,
+                 'data'     => $result
+
+            ]) ;
 
          }
 
+
+         return response()->json([
+
+             'success' => 'ok' ,
+             'message' => 'status has been updated !!!',
+             'data'    => $result 
+
+
+         ], 200 );
 
 
     }

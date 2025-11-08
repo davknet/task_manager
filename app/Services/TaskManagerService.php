@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\TasksManagerModel;
+use App\Models\TaskStatusModel;
 use App\Repository\TaskRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -76,30 +77,11 @@ class TaskManagerService
 
 
 
-            $row = DB::table('task_manager')
-                   ->leftJoin( 'is_answer_correct', 'task_manager.task_id', '=', 'is_answer_correct.task_id' )
-                   ->leftJoin('users' , 'task_manager.user_id' , '=' , 'users.id')
-                   ->leftJoin('tasks' , 'task_manager.task_id' , '=' , 'tasks.id' )
-                   ->leftJoin('task_status' , 'task_manager.status_id' , '=' , 'task_status.id')
-                   ->leftJoin('task_priority' , 'task_manager.priority_id' , '=' , 'task_priority.id')
-                   ->leftJoin('task_answers' , 'task_manager.answer_id' , '=' , 'task_answers.id' )
-                   ->where('task_manager.task_id' , $task_id )
-                   ->where('task_manager.user_id' , $user_id )
-                   ->select(
-                    'task_manager.*' ,
-                    'is_answer_correct.task_answers_id AS correct_answer_id' ,
-                    'users.name as full_name' ,
-                    'tasks.title as question' ,
-                    'task_manager.id AS task_manager_id',
-                    'task_status.title as status' ,
-                    'task_priority.title as priority' ,
-                    'task_answers.answer_text as answer'
 
-                   )
-            ->latest('task_manager.id')
-            ->first();
+           $row = $this->taskRepository->getTaskForRecord(  (int)$task_id , (int)$user_id );
 
-
+           if( $row )
+           {
 
            $res = $this->taskRepository->makeTestRecords($row);
 
@@ -125,9 +107,85 @@ class TaskManagerService
 
                  'success' => 'ok' ,
                  'message' => 'the task created successfully' ,
+                 'status'  =>   'completed' ,
                  'data'    =>  $res
 
             ] ;
+
+           }
+
+
+           return [
+
+                 'success' => 'ok' ,
+                 'message' => 'task created successfully !!!' ,
+                 'data'    => $data
+
+           ];
+
+    }
+
+
+
+
+
+    public function updateTaskManagerStatus(array $data ){
+
+          $id      = $data['id'];
+          $status  = $data['status'] ;
+
+          $task_manager = TasksManagerModel::find($id);
+
+
+         if(!$task_manager){
+
+            return [
+                'success' => false ,
+                'message' => 'please, Provide correct valid id !!! '
+            ];
+         }elseif( $task_manager->status_id   ==  '3' )
+        {
+
+           return [
+
+               'success' => false ,
+               'message' => 'you can\'t update status of completed task'
+           ];
+
+
+        }
+
+
+
+        $user_id    = $task_manager->user_id ;
+
+        $new_status = DB::table('task_status')
+                      ->where('title' , $status )
+                      ->first();
+
+
+
+        if( !$new_status )
+         {
+
+              return [
+                    'success' => false,
+                    'message' => ' status id is  not valid !!!  '
+            ];
+
+        }
+
+
+
+
+
+
+       return  $this->taskRepository->updateStatus([
+                'id'         => $id ,
+                 'status_id' => $new_status->id  ,
+                 'user_id'   => $user_id
+
+                ]);
 
     }
 }

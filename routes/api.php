@@ -20,14 +20,13 @@ Route::prefix('tasks')->controller(TaskController::class)->group(function () {
 
 
 
-Route::prefix('/make/manager')->group(function () {
+Route::prefix('/make/manager')->name('make.manager.')->group(function () {
 
-
-    Route::post('/create' , [ TasksManagerController::class , 'create' ])->name('create') ;
-
-
+    Route::post('/create', [TasksManagerController::class, 'create'])->name('create');
+    Route::patch('/update/{id}/status', [TasksManagerController::class, 'update'])->name('update');
 
 });
+
 
 
 
