@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Models\TaskTestMakerModel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TaskRepository
 {
@@ -38,26 +40,22 @@ class TaskRepository
 
 
 
-
-        TaskTestMakerModel::create([
-
-               'task_id'     => $task_id ,
-               'user_id'     => $user_id ,
-               'answer_id'   => $answer_id  ,
-               'status_id'   => $status_id  ,
-               'priority_id' => $priority_id ,
-               'task_manager_id' => $task_manager_id,
-               'full_name'   =>  $full_name ,
-               'task'        =>  $task  ,
-               'status'      =>  $status ,
-               'priority'    =>  $priority,
-               'correct_answer_id' =>  $correct_answer_id ,
-               'is_answer_correct' => $is_answer_correct  ,
-               'created_at'        => $created_at ,
-               'updated_at'        => $updated_at ,
-               'answer'            => $answer
-
-        ]) ;
+            $result = DB::table('task_test_maker')->insert([
+                     'task_id'    => $task_id ,
+                    'user_id'     => $user_id ,
+                    'answer_id'   => $answer_id  ,
+                    'status_id'   => $status_id  ,
+                    'priority_id' => $priority_id ,
+                    'task_manager_id' => $task_manager_id,
+                    'full_name'   =>  $full_name ,
+                    'task'        =>  $task  ,
+                    'status'      =>  $status ,
+                    'priority'    =>  $priority,
+                    'is_answer_correct' => $is_answer_correct  ,
+                    'created_at'        => $created_at ,
+                    'updated_at'        => $updated_at ,
+                    'answer'            => $answer
+                ]);
 
 
 
