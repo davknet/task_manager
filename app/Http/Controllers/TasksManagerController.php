@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchTaskRequest;
 use App\Http\Requests\TaskManagerRequest;
 use App\Http\Requests\TaskManagerUpdateStatusRequest;
 use App\Services\TaskManagerService;
@@ -163,8 +164,18 @@ class TasksManagerController extends Controller
             ]);
 
         }
+    }
 
 
+
+
+
+
+
+
+
+
+    public function searchTasks( SearchTaskRequest $request ){
 
 
 
