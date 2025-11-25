@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TasksManagerController;
 use Illuminate\Http\Request;
@@ -13,9 +14,21 @@ Route::get('/user', function (Request $request) {
 
 
 
+
+Route::prefix('auth')->name('auth.')->group(function (){
+
+    Route::post('/register' , [ AuthController::class, 'register'])->name('register');
+    Route::get('login')->
+
+
+});
+
+
+
+
+
 Route::prefix('tasks')->controller(TaskController::class)->group(function () {
     Route::get('/', 'index')->name('tasks');
-
 });
 
 
@@ -26,7 +39,6 @@ Route::prefix('/make/manager')->name('make.manager.')->group(function () {
     Route::patch('/update/{id}/status', [TasksManagerController::class, 'update'])->name('update');
     Route::get('/tasks/available/{id}' , [TasksManagerController::class, 'getAvailableTasks'])->name('getList');
     Route::get('/tasks' , [TasksManagerController::class, 'searchTasks'])->name('search.tasks');
-
 
 
 });

@@ -43,9 +43,7 @@ class TaskManagerUpdateStatusRequest extends FormRequest
             'error'   => $validator->errors()
 
 
-        ], 422 )
-
-       );
+        ], 422 ));
 
     }
 

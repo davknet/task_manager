@@ -86,14 +86,12 @@ class TaskManagerRequest extends FormRequest
 
         response()->json([
 
-            'success' => false ,
-            'message' => 'validation failed !!! ' ,
-            'error'   => $validator->errors()
+            'success' =>  false ,
+            'message' => 'validation failed !!!' ,
+            'error'   =>  $validator->errors()
 
 
-        ], 422 )
-
-       );
+        ], 422 ));
 
     }
 
