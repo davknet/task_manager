@@ -18,7 +18,8 @@ Route::get('/user', function (Request $request) {
 Route::prefix('auth')->name('auth.')->group(function (){
 
     Route::post('/register' , [ AuthController::class, 'register'])->name('register');
-    Route::get('login')->
+    Route::post('/login'    , [ AuthController::class , 'login' ] )->name('login');
+
 
 
 });
@@ -33,13 +34,15 @@ Route::prefix('tasks')->controller(TaskController::class)->group(function () {
 
 
 
-Route::prefix('/make/manager')->name('make.manager.')->group(function () {
+Route::prefix('/make/manager')->name('make.manager.')
+->middleware('ensure_token')
+->group(function () {
+
 
     Route::post('/create', [TasksManagerController::class, 'create'])->name('create');
     Route::patch('/update/{id}/status', [TasksManagerController::class, 'update'])->name('update');
     Route::get('/tasks/available/{id}' , [TasksManagerController::class, 'getAvailableTasks'])->name('getList');
-    Route::get('/tasks' , [TasksManagerController::class, 'searchTasks'])->name('search.tasks');
-
+    Route::get('/tasks' , [ TasksManagerController::class , 'searchTasks'])->name('search.tasks');
 
 });
 
